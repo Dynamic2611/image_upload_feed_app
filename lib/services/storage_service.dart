@@ -3,14 +3,33 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 
 class StorageService {
-  Future<String> convertToBase64(String path) async {
-    final bytes = await File(path).readAsBytes();
-    return base64Encode(bytes);
+
+  Future<File> _file() async {
+    final dir = await getApplicationDocumentsDirectory();
+    return File("${dir.path}/images.json");
   }
 
-  Future<void> saveBase64(String base64) async {
-    final dir = await getApplicationDocumentsDirectory();
-    final file = File("${dir.path}/images.txt");
-    await file.writeAsString("$base64\n", mode: FileMode.append);
+  Future<void> saveImage(String base64) async {
+    final file = await _file();
+
+    List list = [];
+
+    if (await file.exists()) {
+      list = jsonDecode(await file.readAsString());
+    }
+
+    list.add(base64);
+
+    await file.writeAsString(jsonEncode(list));
+  }
+
+  Future<List<String>> loadImages() async {
+    final file = await _file();
+
+    if (!await file.exists()) return [];
+
+    List list = jsonDecode(await file.readAsString());
+
+    return List<String>.from(list);
   }
 }

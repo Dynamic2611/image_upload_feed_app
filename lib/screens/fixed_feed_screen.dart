@@ -12,7 +12,7 @@ class FixedFeedScreen extends StatelessWidget {
 
     return ListView.builder(
       itemCount: images.length,
-      itemBuilder: (_, i) => ImageCard(path: images[i], height: h),
+      itemBuilder: (_, i) => ImageCard(base64: images[i], height: h),
     );
   }
 }

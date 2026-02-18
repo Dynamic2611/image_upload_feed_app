@@ -1,11 +1,11 @@
-import 'dart:io';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 
 class ImageCard extends StatelessWidget {
-  final String path;
+  final String base64;
   final double? height;
 
-  const ImageCard({super.key, required this.path, this.height});
+  const ImageCard({super.key, required this.base64, this.height});
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +13,8 @@ class ImageCard extends StatelessWidget {
       height: height,
       margin: const EdgeInsets.all(12),
       child: Card(
-        child: Image.file(
-          File(path),
+        child: Image.memory(
+          base64Decode(base64),
           fit: BoxFit.contain,
         ),
       ),

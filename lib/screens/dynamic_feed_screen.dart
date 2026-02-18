@@ -10,7 +10,7 @@ class DynamicFeedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: images.length,
-      itemBuilder: (_, i) => ImageCard(path: images[i]),
+      itemBuilder: (_, i) => ImageCard(base64: images[i]),
     );
   }
 }
